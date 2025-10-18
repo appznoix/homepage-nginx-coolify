@@ -1,10 +1,568 @@
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello, World!</title>
-  </head>
-  <body>
-    <h1>Até que enfim!</h1>
-  </body>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Plano de marketing digital da Tomi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap"
+            rel="stylesheet">
+        <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .form-step {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .form-step.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+        .input-field {
+            border-bottom: 2px solid #D1D5DB;
+            background: transparent;
+            transition: border-color 0.3s;
+        }
+        .input-field:focus {
+            outline: none;
+            border-bottom-color: #6B7280;
+        }
+        .choice-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .choice-option.selected {
+            background-color: #E5E7EB;
+            border-color: #6B7280;
+            transform: translateY(-2px);
+        }
+        .form-container {
+            min-height: 400px;
+        }
+        .next-button {
+            background-color: #4A4A4A;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .next-button:hover:not(:disabled) {
+            background-color: #373737;
+        }
+        .next-button:disabled {
+            background-color: #D1D5DB;
+            cursor: not-allowed;
+        }
+        .progress-bar-inner {
+            transition: width 0.5s ease-in-out;
+        }
+        .back-button {
+            transition: color 0.3s;
+        }
+        /* Added margin for narrow screens */
+        @media (max-width: 640px) {
+            .max-w-2xl {
+                margin-left: 0.5rem !important;
+                margin-right: 0.5rem !important;
+            }
+        }
+    </style>
+    </head>
+    <body>
+        <div class="w-full max-w-2xl mx-auto">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                <div id="progress-bar"
+                    class="bg-gray-700 h-2.5 rounded-full progress-bar-inner"
+                    style="width: 10%"></div>
+            </div>
+            <div id="back-button-container" class="h-6 mb-2">
+                <button id="back-button"
+                    class="back-button text-gray-500 hover:text-gray-800 hidden"
+                    type="button">← Voltar</button>
+            </div>
+            <div id="form-container"
+                class="relative form-container flex items-center justify-center">
+                <div id="step-1" class="form-step w-full text-center">
+                    <div class="text-5xl mb-4 animate-bounce">👋</div>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">Olá! Eu sou
+                        a <span class="text-gray-900">Tomi</span>,</h1>
+                    <p class="text-lg md:text-xl text-gray-600 mb-6">a
+                        Inteligência Artificial do Marketing Atômico. <br>Estou
+                        aqui para te ajudar a criar um <br>plano de ação de
+                        marketing digital incrível.</p>
+                    <p class="text-lg md:text-xl text-gray-600 mb-8">Vamos
+                        começar?</p>
+
+                    <!-- <input type="text" id="bogus" name="bogus" value="val"
+                        class="input-field hidden"> -->
+                    <button data-next="2"
+                        class="next-button font-bold py-3 px-8 rounded-lg shadow-md">Vamos lá!</button>
+                </div>
+
+                <div id="step-2" class="form-step w-full hidden">
+                    <label for="userName"
+                        class="block text-2xl md:text-3xl font-medium mb-8">Para
+                        começarmos, como posso te chamar?</label>
+                    <input type="text" id="userName" name="userName"
+                        class="input-field w-full text-2xl p-2"
+                        placeholder="Digite seu nome aqui">
+                    <button data-next="3" data-input="userName"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg opacity-0 transition-opacity">OK</button>
+                </div>
+
+                <div id="step-3" class="form-step w-full hidden">
+                    <h2 id="step-3-title"
+                        class="text-2xl md:text-3xl font-medium mb-8"></h2>
+                    <input type="text" id="brandName" name="brandName"
+                        class="input-field w-full text-2xl p-2"
+                        placeholder="Digite o nome da sua marca">
+                    <button data-next="4" data-input="brandName"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg opacity-0 transition-opacity">OK</button>
+                </div>
+
+                <div id="step-4" class="form-step w-full hidden">
+                    <h2 id="step-4-title"
+                        class="text-2xl md:text-3xl font-medium mb-8"></h2>
+                    <textarea id="productService" name="productService" rows="4"
+                        class="input-field w-full text-xl p-2"
+                        placeholder="Ex: Vendo brownies artesanais com foco em ingredientes orgânicos..."></textarea>
+                    <button data-next="5" data-input="productService"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg opacity-0 transition-opacity">OK</button>
+                </div>
+
+                <div id="step-5" class="form-step w-full hidden">
+                    <h2 id="step-5-title"
+                        class="text-2xl md:text-3xl font-medium mb-8"></h2>
+                    <textarea id="idealCustomer" name="idealCustomer" rows="4"
+                        class="input-field w-full text-xl p-2"
+                        placeholder="Ex: Jovens adultos, que se preocupam com a saúde mas não abrem mão de um doce..."></textarea>
+                    <button data-next="6" data-input="idealCustomer"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg opacity-0 transition-opacity">OK</button>
+                </div>
+
+                <div id="step-6" class="form-step w-full hidden">
+                    <h2 id="step-6-title"
+                        class="text-2xl md:text-3xl font-medium mb-8"></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Vender mais">Vender mais</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Atrair mais seguidores">Atrair mais
+                            seguidores</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Fortalecer a marca">Fortalecer a
+                            marca</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Receber mais contatos (WhatsApp/Lead)">Receber
+                            mais contatos (WhatsApp/Lead)</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Gerar autoridade no meu nicho">Gerar
+                            autoridade no meu nicho</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Aumentar o tráfego (site ou loja física)">Aumentar
+                            o tráfego (site ou loja física)</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Lançar um novo produto/serviço">Lançar
+                            um novo produto/serviço</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Fidelizar clientes existentes">Fidelizar
+                            clientes existentes</div>
+                    </div>
+                    <button data-next="7" id="objective-next"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg"
+                        disabled>OK</button>
+                </div>
+
+                <div id="step-7" class="form-step w-full hidden">
+                    <h2 class="text-2xl md:text-3xl font-medium mb-8">E qual é a
+                        sua <span class="font-bold">maior dificuldade</span>
+                        hoje? (Escolha até 2)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Falta de tempo ou equipe">Falta de tempo
+                            ou equipe</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Baixo orçamento para marketing">Baixo
+                            orçamento para marketing</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Dificuldade em criar conteúdo">Dificuldade
+                            em criar conteúdo</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Anúncios não geram retorno">Anúncios não
+                            geram retorno</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Não sei por onde começar">Não sei por
+                            onde começar</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Concorrência muito forte">Concorrência
+                            muito forte</div>
+                    </div>
+                    <button data-next="8" id="challenge-next"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg"
+                        disabled>OK</button>
+                </div>
+
+                <div id="step-8" class="form-step w-full hidden">
+                    <h2 id="step-8-title"
+                        class="text-2xl md:text-3xl font-medium mb-8"></h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-lg">
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Moderna">Moderna</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Confiável">Confiável</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Divertida">Divertida</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Sofisticada">Sofisticada</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Acessível">Acessível</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Inovadora">Inovadora</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Acolhedora">Acolhedora</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Exclusiva">Exclusiva</div>
+                        <div
+                            class="choice-option border-2 border-gray-300 rounded-lg p-4 cursor-pointer"
+                            data-value="Ousada">Ousada</div>
+                    </div>
+                    <button data-next="9" id="personality-next"
+                        class="next-button mt-8 font-bold py-2 px-6 rounded-lg text-lg"
+                        disabled>OK</button>
+                </div>
+
+                <div id="step-9" class="form-step w-full hidden">
+                    <h2 id="step-9-title"
+                        class="text-2xl md:text-3xl font-medium mb-8"></h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="email"
+                                class="block text-lg font-medium text-gray-700">Seu
+                                melhor E-mail</label>
+                            <input type="email" id="email" name="email"
+                                class="input-field w-full text-xl p-2 mt-1"
+                                placeholder="voce@exemplo.com">
+                        </div>
+                        <div>
+                            <label for="whatsapp"
+                                class="block text-lg font-medium text-gray-700">Seu
+                                WhatsApp (com DDD)</label>
+                            <input type="tel" id="whatsapp" name="whatsapp"
+                                class="input-field w-full text-xl p-2 mt-1"
+                                placeholder="(XX) XXXXX XXXX">
+                        </div>
+                        <div>
+                            <label for="instagram"
+                                class="block text-lg font-medium text-gray-700">Seu
+                                Instagram (opcional)</label>
+                            <div class="relative mt-1">
+                                <span
+                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 text-xl">@</span>
+                                <input type="text" id="instagram"
+                                    name="instagram"
+                                    class="input-field w-full text-xl p-2 pl-8"
+                                    placeholder="seunegocio">
+                            </div>
+                        </div>
+                    </div>
+                    <button id="submit-button"
+                        class="next-button mt-8 font-bold py-3 px-8 rounded-lg text-lg"
+                        disabled>Enviar</button>
+                </div>
+
+                <div id="step-10" class="form-step w-full text-center hidden">
+                    <div class="text-5xl mb-4">🚀</div>
+                    <h1 id="step-10-title"
+                        class="text-3xl md:text-4xl font-bold mb-4"></h1>
+                    <p class="text-lg md:text-xl text-gray-600 mb-6">Recebi suas
+                        informações com sucesso. Minha equipe e eu já estamos
+                        trabalhando.</p>
+                    <p class="text-lg md:text-xl text-gray-600">Dentro de
+                        instantes enviaremos o plano para o email que você
+                        informou.</p>
+                </div>
+
+            </div>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalSteps = 10;
+            let currentStep = 1;
+            const formData = {
+                userName: '',
+                brandName: '',
+                productService: '',
+                idealCustomer: '',
+                objectives: [],
+                challenges: [],
+                personality: [],
+                email: '',
+                whatsapp: '',
+                instagram: '',
+            };
+
+            const progressBar = document.getElementById('progress-bar');
+            const allSteps = document.querySelectorAll('.form-step');
+            const backButton = document.getElementById('back-button');
+
+            function showStep(stepNumber) {
+                allSteps.forEach(step => step.classList.add('hidden'));
+                const stepToShow = document.getElementById(`step-${stepNumber}`);
+                if (stepToShow) {
+                    stepToShow.classList.remove('hidden');
+                }
+
+                const progress = Math.min((stepNumber / totalSteps) * 100, 100);
+                progressBar.style.width = `${progress}%`;
+                currentStep = stepNumber;
+
+                if (currentStep > 1 && currentStep < totalSteps) {
+                    backButton.classList.remove('hidden');
+                } else {
+                    backButton.classList.add('hidden');
+                }
+            }
+
+            backButton.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
+            });
+
+            function personalizeText() {
+                const userName = formData.userName || 'Olá';
+                const brandName = formData.brandName || 'sua marca';
+
+                document.getElementById('step-3-title').innerHTML = `Prazer em te conhecer, <span class="font-bold">${userName}</span>! Agora, me diga: qual o nome da sua marca ou negócio?`;
+                document.getElementById('step-4-title').innerHTML = `Legal! E o que a <span class="font-bold">${brandName}</span> vende? Conte para mim sobre seu principal produto ou serviço e o que ele tem de tão especial.`;
+                document.getElementById('step-5-title').innerHTML = `Entendido, <span class="font-bold">${userName}</span>. Agora, vamos pensar em quem compra de você. <br>Descreva seu cliente ideal de forma simples.`;
+                document.getElementById('step-6-title').innerHTML = `<span class="font-bold">${userName}</span>, qual é o seu <span class="font-bold">maior objetivo</span> com o marketing hoje? (Escolha até 2)`;
+                document.getElementById('step-8-title').innerHTML = `Ótima reflexão, <span class="font-bold">${userName}</span>. Agora, um exercício rápido de criatividade!<br>Se sua marca fosse uma pessoa, quais palavras a descreveriam? (Escolha até 3)`;
+                document.getElementById('step-9-title').innerHTML = `Estamos quase lá, <span class="font-bold">${userName}</span>! Para onde devo enviar o seu Plano de Ação personalizado?`;
+                document.getElementById('step-10-title').innerHTML = `Pronto, <span class="font-bold">${userName}</span>!`;
+            }
+
+            // Allow Enter key to go to next step for input/textarea fields
+            document.querySelectorAll('.form-step').forEach(step => {
+                const input = step.querySelector('.input-field');
+                const nextButton = step.querySelector('button[data-next]');
+
+                if (input && nextButton) {
+                    input.addEventListener('keydown', (e) => {
+                        if (
+                            e.key === 'Enter' &&
+                            !nextButton.disabled &&
+                            (input.value.trim().length >= 3)
+                        ) {
+                            e.preventDefault();
+                            nextButton.click();
+                        }
+                    });
+                }
+                /*
+                if(nextButton.innerHTML=="Vamos lá!") {
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' &&
+                            !nextButton.disabled) {
+                            e.preventDefault();
+                            nextButton.click();
+                        }
+                    });
+                }
+                    */
+
+            });
+
+            document.querySelectorAll('button[data-next]').forEach(button => {
+                button.addEventListener('click', () => {
+                    const nextStep = parseInt(button.dataset.next);
+                    const inputId = button.dataset.input;
+
+                    if (inputId) {
+                        const inputElement = document.getElementById(inputId);
+                        if (inputElement.value.trim().length >= 3) {
+                            formData[inputId] = inputElement.value;
+                        } else {
+                            // Não avança se menos de 3 caracteres
+                            inputElement.focus();
+                            return;
+                        }
+                    }
+
+                    personalizeText();
+                    showStep(nextStep);
+                });
+            });
+
+            document.querySelectorAll('.input-field').forEach(input => {
+                const nextButton = input.closest('.form-step').querySelector('button[data-next]');
+                if (nextButton) {
+                    input.addEventListener('input', () => {
+                        if (input.value.trim().length >= 3)  {
+                            nextButton.classList.remove('opacity-0');
+                            nextButton.disabled = false;
+                        } else {
+                            nextButton.classList.add('opacity-0');
+                            nextButton.disabled = true;
+                        }
+                    });
+                    // Inicializa o botão como desabilitado
+                    //nextButton.disabled = (nextButton.innerHTML!="Vamos lá");
+                    nextButton.disabled = true;
+                    /*
+                    if(nextButton.innerHTML=="Vamos lá!"){
+                        nextButton.disabled = false
+                    }
+                    */
+                    
+                }
+            });
+
+            function setupMultiChoice(stepId, formDataKey, maxSelections, nextButtonId) {
+                const options = document.querySelectorAll(`#${stepId} .choice-option`);
+                const nextBtn = document.getElementById(nextButtonId);
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const value = option.dataset.value;
+                        if (formData[formDataKey].includes(value)) {
+                            formData[formDataKey] = formData[formDataKey].filter(item => item !== value);
+                            option.classList.remove('selected');
+                        } else {
+                            if (formData[formDataKey].length < maxSelections) {
+                                formData[formDataKey].push(value);
+                                option.classList.add('selected');
+                            }
+                        }
+                        nextBtn.disabled = formData[formDataKey].length === 0;
+                    });
+                });
+            }
+
+            setupMultiChoice('step-6', 'objectives', 2, 'objective-next');
+            setupMultiChoice('step-7', 'challenges', 2, 'challenge-next');
+            setupMultiChoice('step-8', 'personality', 3, 'personality-next');
+
+            const emailInput = document.getElementById('email');
+            const whatsappInput = document.getElementById('whatsapp');
+            const submitButton = document.getElementById('submit-button');
+
+            whatsappInput.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                v = v.substring(0, 11);
+                if (v.length > 10) {
+                    v = v.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2 $3');
+                } else if (v.length > 6) {
+                    v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2 $3');
+                } else if (v.length > 2) {
+                    v = v.replace(/^(\d{2})(\d+)/, '($1) $2');
+                } else if (v.length > 0) {
+                    v = `(${v}`;
+                }
+                e.target.value = v;
+                validateContactForm();
+            });
+
+            function validateContactForm() {
+                const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+                const whatsappLength = whatsappInput.value.replace(/\D/g, '').length;
+                const isWhatsappValid = whatsappLength === 10 || whatsappLength === 11;
+                submitButton.disabled = !(isEmailValid && isWhatsappValid);
+            }
+            emailInput.addEventListener('input', validateContactForm);
+
+            // Allow Enter key to submit on last step if valid
+            emailInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !submitButton.disabled) {
+                    e.preventDefault();
+                    submitButton.click();
+                }
+            });
+            whatsappInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !submitButton.disabled) {
+                    e.preventDefault();
+                    submitButton.click();
+                }
+            });
+
+            submitButton.addEventListener('click', () => {
+                formData.email = document.getElementById('email').value;
+                formData.whatsapp = document.getElementById('whatsapp').value;
+                formData.instagram = document.getElementById('instagram').value;
+
+                submitForm();
+            });
+
+            function submitForm() {
+                const webhookUrl = 'https://n8n.srv1059121.hstgr.cloud/webhook/4ca504b2-83cc-4393-9040-a400159876ba';
+
+                const cleanedData = Object.fromEntries(
+                    Object.entries(formData).map(([key, value]) => {
+                        if (typeof value === 'string') {
+                            return [key, value.trim()];
+                        }
+                        return [key, value];
+                    })
+                );
+
+                console.log("DADOS A SEREM ENVIADOS PARA O WEBHOOK:", cleanedData);
+                submitButton.textContent = 'Enviando...';
+                submitButton.disabled = true;
+                backButton.classList.add('hidden');
+
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(cleanedData),
+                })
+                .then(response => {
+                    if(response.ok) {
+                        showStep(10);
+                    } else {
+                        alert('Ocorreu um erro ao enviar seus dados. Tente novamente.');
+                        submitButton.textContent = 'Enviar';
+                        submitButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ocorreu um erro de conexão. Tente novamente.');
+                    submitButton.textContent = 'Enviar';
+                    submitButton.disabled = false;
+                });
+            }
+
+            personalizeText();
+            showStep(1);
+        });
+    </script>
+    </body>
 </html>
