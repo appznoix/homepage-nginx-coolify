@@ -72,24 +72,7 @@
             }
         }
     </style>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1012483692178790');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1012483692178790&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->    
-</head>
+    </head>
     <body>
         <div class="w-full max-w-2xl mx-auto">
             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
@@ -537,7 +520,7 @@ src="https://www.facebook.com/tr?id=1012483692178790&ev=PageView&noscript=1"
             });
 
             function submitForm() {
-                const webhookUrl ='https://n8n.marketingatomico.com.br/webhook/4ca504b2-83cc-4393-9040-a400159876ba';
+                const webhookUrl ='https://n8n.marketingatomico.com.br/webhook-test/4ca504b2-83cc-4393-9040-a400159876ba';
                 const cleanedData = Object.fromEntries(
                     Object.entries(formData).map(([key, value]) => {
                         if (typeof value === 'string') {
